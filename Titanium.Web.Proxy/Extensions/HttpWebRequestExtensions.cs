@@ -1,20 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Net;
 using System.Text;
+using Titanium.Web.Proxy.Network;
 
 namespace Titanium.Web.Proxy.Extensions
 {
     public static class HttpWebRequestExtensions
     {
-        public static Encoding GetEncoding(this HttpWebRequest request)
+        public static Encoding GetEncoding(this HttpWebSession request)
         {
             try
             {
-                if (request.ContentType == null) return Encoding.GetEncoding("ISO-8859-1");
+                if (request.Request.ContentType == null) return Encoding.GetEncoding("ISO-8859-1");
 
-                var contentTypes = request.ContentType.Split(';');
+                var contentTypes = request.Request.ContentType.Split(';');
                 foreach (var contentType in contentTypes)
                 {
                     var encodingSplit = contentType.Split('=');
@@ -24,7 +22,10 @@ namespace Titanium.Web.Proxy.Extensions
                     }
                 }
             }
-            catch { }
+            catch
+            {
+                // ignored
+            }
 
             return Encoding.GetEncoding("ISO-8859-1");
         }
