@@ -45,6 +45,22 @@ namespace Titanium.Web.Proxy.Helpers
                 reg.SetValue("ProxyServer", prevProxyServer);
             refresh();
         }
+        public static void DisableAllProxyWithourRestore()
+        {
+            RegistryKey reg = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", true);
+            reg.SetValue("ProxyEnable", 0);
+            //if (prevProxyServer != null)
+            //    reg.SetValue("ProxyServer", prevProxyServer);
+            refresh();
+        }
+        public static void DisableAllProxyWithourRestoreAndRefresh()
+        {
+            RegistryKey reg = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings", true);
+            reg.SetValue("ProxyEnable", 0);
+            //if (prevProxyServer != null)
+            //    reg.SetValue("ProxyServer", prevProxyServer);
+            //refresh();
+        }
         private static void refresh()
         {
             settingsReturn = NativeMethods.InternetSetOption(IntPtr.Zero, INTERNET_OPTION_SETTINGS_CHANGED, IntPtr.Zero, 0);
